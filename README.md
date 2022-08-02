@@ -1,4 +1,4 @@
-# WE're going to build facebook BE(and not only ^_^) clone, Uyiiiii
+# WE're going to build facebook BE(and not only) clone
 
 ## User Stories
 - [X] Users should be able to register
