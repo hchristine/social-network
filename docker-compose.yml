@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=fbpass
+      - POSTGRES_USER=christy
+      - POSTGRES_DB=facebook_clone
+
+  # app: 
+  #   build: .
+  #   ports: 
+  #     - 3000:3000
+  #   environment:
+  #     - PORT=3000
+  #     - DB_URI=postgres://christy:fbpass@db:5432/facebook_clone
+  #     - JWT_SECRET=knasbdfjhawsbsadv
+  #     - CLOUDINARY_CLOUD_NAME=dhtzy18pv
+  #     - CLOUDINARY_API_KEY=787331694111768
+  #     - CLOUDINARY_API_SECRET=eqmU5_B911FBTUaReQJ8hdKsW8g
+  #   volumes:
+  #     - ./src:/facebook/src
