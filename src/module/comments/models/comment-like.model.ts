@@ -4,14 +4,14 @@ import { User } from "../../users/user.model";
 
 type BasicInfo = Pick<User, 'id' | 'name'>;
 
-export class PostLike extends Model<InferAttributes<PostLike>, InferCreationAttributes<PostLike>>{
-    declare postId: number;
+export class CommentLike extends Model<InferAttributes<CommentLike>, InferCreationAttributes<CommentLike>>{
+    declare commentId: number;
     declare userId: number;
     declare User?: User;
 
-    static async findUsersForPost(postId: number): Promise<BasicInfo[]> {
-        const likes = await PostLike.findAll({
-            where: { postId },
+    static async findUsersForComment(commentId: number): Promise<BasicInfo[]> {
+        const likes = await CommentLike.findAll({
+            where: { commentId },
             include: [{
                 model: User,
                 attributes: ['id', 'name']
@@ -21,8 +21,8 @@ export class PostLike extends Model<InferAttributes<PostLike>, InferCreationAttr
     }
 }
 
-PostLike.init({
-    postId: {
+CommentLike.init({
+    commentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -34,20 +34,20 @@ PostLike.init({
     sequelize,
     indexes: [{
         unique: true,
-        fields: ['userId', 'postId']
+        fields: ['commentId', 'userId']
     }]
 });
 
-PostLike.removeAttribute('id');
+CommentLike.removeAttribute('id');
 
 export function associate(sequelize: Sequelize) {
-    PostLike.belongsTo(sequelize.models.Post, {
+    CommentLike.belongsTo(sequelize.models.Comment, {
         foreignKey: {
-            name: 'postId'
+            name: 'commentId'
         }
     });
 
-    PostLike.belongsTo(sequelize.models.User, {
+    CommentLike.belongsTo(sequelize.models.User, {
         foreignKey: {
             name: 'userId'
         }

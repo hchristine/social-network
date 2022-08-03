@@ -1,5 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
-import { sequelize } from "../../db/database";
+import { sequelize } from "../../../db/database";
 
 export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>>{
     declare id: CreationOptional<number>;
@@ -41,6 +41,12 @@ export function associate(sequelize: Sequelize) {
     Comment.belongsTo(sequelize.models.User, {
         foreignKey: {
             name: 'userId'
+        }
+    });
+
+    Comment.hasMany(sequelize.models.CommentLike, {
+        foreignKey: {
+            name: 'commentId'
         }
     });
 }

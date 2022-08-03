@@ -1,5 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
-import { Comment } from '../../comments/comment.model';
+import { Comment } from '../../comments/models/comment.model';
 import { sequelize } from "../../../db/database";
 
 

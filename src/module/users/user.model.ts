@@ -98,4 +98,24 @@ export function associate(sequelize: Sequelize) {
             name: 'userId'
         }
     });
+
+    User.hasMany(sequelize.models.CommentLike, {
+        foreignKey: {
+            name: 'userId'
+        }
+    });
+
+    User.hasMany(sequelize.models.BlockList, {
+        as: 'user',
+        foreignKey: {
+            name: 'blockedBy'
+        }
+    });
+
+    User.hasMany(sequelize.models.BlockList, {
+        as: 'blockedUser',
+        foreignKey: {
+            name: 'blockedTo'
+        }
+    });
 };

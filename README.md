@@ -6,13 +6,13 @@
 - [X] Users should be able to edit his/her profile
 - [X] Users should be able to post image with description
 - [ ] Users should be able to see Friends posts in the feed
-- [ ] Users should be able to like the post
-- [ ] Users should be able to leave comment under the post
-- [ ] Users should be able to like other's comment
+- [X] Users should be able to like the post
+- [X] Users should be able to leave comment under the post
+- [X] Users should be able to like other's comment
 - [ ] Users should be able to send friend request to other users
 - [ ] Users should see pending friend requests
 - [ ] Users should be able to accept or cancel friend request
-- [ ] Users should be able to block other users
+- [X] Users should be able to block other users
 - [ ] If user blocked a user, that user no longer can send friend request
 - [ ] Users should see current online users
 - [ ] Users should be able to chat with other FRIEND users

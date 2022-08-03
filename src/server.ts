@@ -4,6 +4,7 @@ import { IAuthPayload } from "./services/auth";
 import { router as userRouter } from './module/users/users.router';
 import { router as postsRouter } from './module/posts/posts.router';
 import { router as commentsRouter } from "./module/comments/comments.router";
+import { router as blocklistRouter } from "./module/blocklist/blocklists.router";
 
 const app = new App();
 const port = process.env.PORT ?? 3000;
@@ -11,6 +12,7 @@ const port = process.env.PORT ?? 3000;
 app.useRouter(userRouter);
 app.useRouter(postsRouter);
 app.useRouter(commentsRouter);
+app.useRouter(blocklistRouter);
 
 export async function bootstrap() {
     try {
