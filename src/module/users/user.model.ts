@@ -1,5 +1,9 @@
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, Op, QueryTypes } from 'sequelize';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
+
+
 import { sequelize } from "../../db/database";
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
 interface LoginCredentials {
@@ -37,6 +41,21 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
         throw new Error('Not found.');
     };
+
+    static async getFeed(userId: number) {
+        const queryFilePath = join(process.cwd(), 'sql', 'get_feed.sql');
+        const sql = await readFile(queryFilePath, { encoding: 'utf-8' });
+
+        const result = await sequelize.query(sql, {
+            replacements: {
+                userId
+            },
+            nest: true,
+            type: QueryTypes.SELECT,
+        });
+
+        return result;
+    }
 
     async comparePassword(passwordToCompare: string) {
         return bcrypt.compare(passwordToCompare, this.password);
@@ -116,6 +135,34 @@ export function associate(sequelize: Sequelize) {
         as: 'blockedUser',
         foreignKey: {
             name: 'blockedTo'
+        }
+    });
+
+    User.hasMany(sequelize.models.Friends, {
+        as: 'senderUser',
+        foreignKey: {
+            name: 'sendBy'
+        }
+    });
+
+    User.hasMany(sequelize.models.Friends, {
+        as: 'receiverUser',
+        foreignKey: {
+            name: 'sendTo'
+        }
+    });
+
+    User.hasMany(sequelize.models.Message, {
+        as: 'sender',
+        foreignKey: {
+            name: 'senderId'
+        }
+    });
+
+    User.hasMany(sequelize.models.Message, {
+        as: 'receiver',
+        foreignKey: {
+            name: 'receiverId'
         }
     });
 };

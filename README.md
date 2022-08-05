@@ -9,11 +9,11 @@
 - [X] Users should be able to like the post
 - [X] Users should be able to leave comment under the post
 - [X] Users should be able to like other's comment
-- [ ] Users should be able to send friend request to other users
-- [ ] Users should see pending friend requests
-- [ ] Users should be able to accept or cancel friend request
+- [X] Users should be able to send friend request to other users
+- [X] Users should see pending friend requests
+- [X] Users should be able to accept or cancel friend request
 - [X] Users should be able to block other users
-- [ ] If user blocked a user, that user no longer can send friend request
+- [X] If user blocked a user, that user no longer can send friend request
 - [ ] Users should see current online users
 - [ ] Users should be able to chat with other FRIEND users
 

@@ -47,3 +47,8 @@ export async function edit(req: Request, res: Response) {
     }
 }
 
+export async function getFeed(req: Request, res: Response) {
+    const { id } = req.user!;
+    const feed = await User.getFeed(id);
+    res.json(feed);
+}

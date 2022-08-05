@@ -12,11 +12,18 @@ export type RouterConfig = {
     prefix: string;
 }
 
+export type RouteInfo = {
+    method: string,
+    url: string,
+}
+
 export interface EngineRouter {
     get(path: string): RouteProcessor;
     post(path: string): RouteProcessor;
     put(path: string): RouteProcessor;
     delete(path: string): RouteProcessor;
+    patch(path: string): RouteProcessor;
     getRouter(): Router;
     getConfig(): RouterConfig;
+    getRoutesList(): RouteInfo[]
 }

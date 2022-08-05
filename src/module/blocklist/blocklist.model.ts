@@ -20,6 +20,16 @@ export class BlockList extends Model<InferAttributes<BlockList>, InferCreationAt
         });
         return list.map((item) => item.blockedUser!);
     }
+
+    static async isFriendshipPossible(requesterId: number, receiverId: number) {
+        const blockedUser = await BlockList.findOne({
+            where: {
+                blockedBy: receiverId,
+                blockedTo: requesterId
+            }
+        });
+        return !blockedUser;
+    }
 }
 
 BlockList.init({
