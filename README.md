@@ -5,7 +5,7 @@
 - [X] Users should be able to sign in
 - [X] Users should be able to edit his/her profile
 - [X] Users should be able to post image with description
-- [ ] Users should be able to see Friends posts in the feed
+- [X] Users should be able to see Friends posts in the feed
 - [X] Users should be able to like the post
 - [X] Users should be able to leave comment under the post
 - [X] Users should be able to like other's comment
