@@ -10,7 +10,7 @@ export interface Storage {
     setSocketUser(socketId: string, user: SocketUserInfo): Promise<void>;
 }
 
-class Cache2 implements Storage {
+class Cache implements Storage {
     private client: ReturnType<typeof createClient>;
 
     constructor() {
@@ -37,4 +37,4 @@ class Cache2 implements Storage {
     }
 }
 
-export const cache = new Cache2();
+export const cache = new Cache();
