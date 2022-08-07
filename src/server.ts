@@ -1,4 +1,5 @@
 import { connect } from "./db/connect";
+import { cache } from './lib/cache';
 import { App } from "./lib/app";
 import { IAuthPayload } from "./services/auth";
 import { router as userRouter } from './module/users/users.router';
@@ -21,6 +22,8 @@ app.useRouter(messageRouter);
 export async function bootstrap() {
     try {
         await connect();
+        await cache.connect();
+        console.log('DB and Cache connected!');
         await app.start(port);
         console.log("Connection has been established successfully.")
     }
