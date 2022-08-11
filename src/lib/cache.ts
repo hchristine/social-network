@@ -8,6 +8,8 @@ type SocketUserInfo = {
 export interface Storage {
     getSocketUser(socketId: string): Promise<SocketUserInfo | null>;
     setSocketUser(socketId: string, user: SocketUserInfo): Promise<void>;
+    getSocketId(userId: number): Promise<string | null>;
+    setSocketId(userId: number, socketId: string): Promise<void>;
 }
 
 class Cache implements Storage {
@@ -34,6 +36,15 @@ class Cache implements Storage {
     async setSocketUser(socketId: string, user: SocketUserInfo): Promise<void> {
         const userStr = JSON.stringify(user);
         await this.client.set(socketId, userStr);
+    }
+
+    async getSocketId(userId: number) {
+        return this.client.get(userId.toString());
+    }
+
+    async setSocketId(userId: number, socketId: string) {
+        const userIdStr = userId.toString();
+        await this.client.set(userIdStr, socketId);
     }
 }
 

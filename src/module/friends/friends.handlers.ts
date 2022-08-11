@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Op } from "sequelize";
 import { BlockList } from "../blocklist/blocklist.model";
 import { Friends } from "./friend.model";
 
@@ -16,14 +17,18 @@ export async function sendFriendRequest(req: Request, res: Response) {
     if (!isAllowed) {
         res.status(403).send();
         return;
-        
-    }
 
-    await Friends.create({
-        sendTo,
-        sendBy
-    });
-    res.send();
+    }
+    try {
+        await Friends.create({
+            sendTo,
+            sendBy
+        });
+        res.send();
+    }
+    catch {
+        res.status(500).send();
+    }
 }
 
 export async function acceptRequest(req: Request, res: Response) {
@@ -48,4 +53,20 @@ export async function getPendingRequests(req: Request, res: Response) {
     const { id: sendBy } = req.user!;
     const requests = await Friends.getPendingRequests(sendBy);
     res.json(requests);
+}
+
+export async function unFriend(req: Request, res: Response) {
+    const friendId = +req.params.friendId;
+
+    // debugger;
+    await Friends.destroy({
+        where: {
+            [Op.or]: [
+                { sendBy: req.user!.id, sendTo: friendId },
+                { sendTo: req.user!.id, sendBy: friendId }
+            ]
+        }
+    });
+
+    res.send();
 }

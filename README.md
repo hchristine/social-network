@@ -14,16 +14,16 @@
 - [X] Users should be able to accept or cancel friend request
 - [X] Users should be able to block other users
 - [X] If user blocked a user, that user no longer can send friend request
-- [ ] Users should see current online users
-- [ ] Users should be able to chat with other FRIEND users
+- [X] Users should see current online users
+- [X] Users should be able to chat with other FRIEND users
 
 ## Technical requirements
 - [X] User should have email, name, password
 - [x] Each uploaded post image should be resized to 200x200 and then uploaded to cloudinary
-- [ ] All chat messages should be saved in the database
+- [X] All chat messages should be saved in the database
 - [X] DB: Postgres
 - [X] BE: Node, Express
-- [ ] Caching: Redis
+- [X] Caching: Redis
 - [X] Etc: Docker, Docker Compose
 - [X] ORM: Sequelize
-- [ ] Socket connection: Socket.io
+- [X] Socket connection: Socket.io

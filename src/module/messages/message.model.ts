@@ -1,5 +1,6 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Op, Sequelize } from "sequelize";
 import { sequelize } from "../../db/database";
+import { User } from "../users/user.model";
 
 export class Message extends Model<InferAttributes<Message>, InferCreationAttributes<Message>> {
     declare id: CreationOptional<number>;
@@ -7,6 +8,23 @@ export class Message extends Model<InferAttributes<Message>, InferCreationAttrib
     declare senderId: number;
     declare receiverId: number;
     declare isRead: boolean;
+
+    static async getHistory(senderId: number, receiverId: number) {
+        const conversation = await Message.findAll({
+            where: {
+                [Op.or]: [
+                    { senderId: receiverId },
+                    { receiverId: senderId }
+                ]
+            },
+            include: [{
+                as: 'sender',
+                model: User,
+                attributes: ['name']
+            }]
+        });
+        return conversation.map((item) => item.content);
+    }
 }
 
 Message.init({

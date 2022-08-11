@@ -6,6 +6,6 @@ export const router = new Router({
     prefix: '/messages'
 });
 
-router.get('/')
+router.get('/:id')
     .use([isAuthorized])
     .handle(getConversation);

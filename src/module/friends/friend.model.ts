@@ -1,6 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
 import { sequelize } from "../../db/database";
-import { BlockList } from "../blocklist/blocklist.model";
 import { User } from "../users/user.model";
 
 type BasicInfo = Pick<User, 'id' | 'name'>;

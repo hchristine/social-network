@@ -1,6 +1,6 @@
 import { Router } from "../../lib/router";
 import { isAuthorized } from "../../middlewares/isAuthorized";
-import { register, login, edit, getFeed } from './users.handlers';
+import { register, login, edit, getFeed, getAllUsers } from './users.handlers';
 
 export const router = new Router({
     prefix: '/users'
@@ -19,3 +19,7 @@ router.put('/')
 router.get('/feed')
     .use([isAuthorized])
     .handle(getFeed);
+
+router.get('/')
+    .use([isAuthorized])
+    .handle(getAllUsers);

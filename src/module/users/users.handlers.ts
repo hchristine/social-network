@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { Op } from "sequelize";
+import { sequelize } from "../../db/database";
 import { auth } from "../../services/auth";
 import { User } from './user.model';
 
@@ -51,4 +53,30 @@ export async function getFeed(req: Request, res: Response) {
     const { id } = req.user!;
     const feed = await User.getFeed(id);
     res.json(feed);
+}
+
+export async function getAllUsers(req: Request, res: Response) {
+    const allUsers = await User.findAll({
+        where: {
+            id: {
+                [Op.ne]: req.user!.id
+            }
+        },
+        attributes: {
+            include: [[
+                sequelize.literal(`(EXISTS((SELECT * FROM "Friends" 
+                WHERE (("sendTo"=${req.user!.id} AND "sendBy"="User".id) OR ("sendTo"="User".id AND "sendBy"=${req.user!.id})) AND "requestStatus"='Accepted')))`),
+                'isFriend'
+            ], [
+                sequelize.literal(`(EXISTS((SELECT * FROM "Friends" 
+                WHERE (("sendTo"=${req.user!.id} AND "sendBy"="User".id) OR ("sendTo"="User".id AND "sendBy"=${req.user!.id})) AND "requestStatus"='Pending')))`),
+                'hasPendingRequest'
+            ], [
+                sequelize.literal(`EXISTS(SELECT * FROM "BlockLists" WHERE "blockedBy" = ${req.user!.id} AND "blockedTo" = "User".id)`),
+                'isBlocked'
+            ]],
+            exclude: ['password', 'createdAt', 'updatedAt']
+        }
+    });
+    res.json(allUsers);
 }

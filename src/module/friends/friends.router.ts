@@ -1,6 +1,6 @@
 import { Router } from "../../lib/router";
 import { isAuthorized } from "../../middlewares/isAuthorized";
-import { sendFriendRequest, acceptRequest, rejectRequest, getPendingRequests } from "./friends.handlers";
+import { sendFriendRequest, acceptRequest, rejectRequest, getPendingRequests, unFriend } from "./friends.handlers";
 
 export const router = new Router({
     prefix: '/friends'
@@ -14,10 +14,14 @@ router.patch('/')
     .use([isAuthorized])
     .handle(acceptRequest);
 
-router.delete('/:sendBy')
+router.delete('/reject/:sendBy')
     .use([isAuthorized])
     .handle(rejectRequest);
 
 router.get('/')
     .use([isAuthorized])
     .handle(getPendingRequests);
+
+router.delete('/:friendId')
+    .use([isAuthorized])
+    .handle(unFriend);
