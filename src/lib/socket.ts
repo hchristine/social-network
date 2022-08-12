@@ -105,6 +105,9 @@ export class SocketHandler {
     }
 
     private onDisconnect(socket: Socket) {
-        socket.on(SocketEvent.Disconnect, () => this.emitCurrentOnlineUsers(socket));
-    }
+        socket.on(SocketEvent.Disconnect, () => {
+            this.emitCurrentOnlineUsers(socket);
+            this.storage.deleteUserData(socket.id);
+        });
+    };
 }

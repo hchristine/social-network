@@ -10,6 +10,7 @@ export interface Storage {
     setSocketUser(socketId: string, user: SocketUserInfo): Promise<void>;
     getSocketId(userId: number): Promise<string | null>;
     setSocketId(userId: number, socketId: string): Promise<void>;
+    deleteUserData(socketId: string): Promise<void>;
 }
 
 class Cache implements Storage {
@@ -45,6 +46,16 @@ class Cache implements Storage {
     async setSocketId(userId: number, socketId: string) {
         const userIdStr = userId.toString();
         await this.client.set(userIdStr, socketId);
+    }
+
+    async deleteUserData(socketId: string) {
+        const user = await this.getSocketUser(socketId);
+        if (user) {
+            await Promise.all([
+                this.client.del(socketId),
+                this.client.del(user!.id.toString())
+            ])
+        }
     }
 }
 
